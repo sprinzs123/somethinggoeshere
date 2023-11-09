@@ -30,7 +30,8 @@ string* substringArr(string fullString, string delimeter) {
 			arrIndex++;
 		}
 	}
-
+	cout << arrIndex;
+	//cout << "making substrings from: " << fullString << endl;
 	// making array of substring that is going to return
 	int insertIndex = 0;  // index at where going to inset string into array
 	int prevDelimiter = 0;
@@ -38,6 +39,7 @@ string* substringArr(string fullString, string delimeter) {
 		int temp = indexi[i];
 		//cout << "start: " << prevDelimiter << " end: " << temp << endl;
 		string substring =  fullString.substr(prevDelimiter, temp - prevDelimiter); // getting substring
+		cout << substring << endl;
 		strBrokenUp[insertIndex] = substring;
 		insertIndex++;
 		prevDelimiter = temp + 1;  // reseting start of string
@@ -116,16 +118,34 @@ int main()
 	stringstream strStream;
 	strStream << file.rdbuf(); //read the file
 	string strText = strStream.str(); //str holds the content of the file
-	cout << "File content:" << strText << endl;
-	string test = "one@two@tree@@@";
+	//cout << "File content:" << strText << endl;
+	string test = "one@two@tree";
 
-	string* arrString;
-	arrString = substringArr(test, "@");
+	//string* arrString;
+	//arrString = substringArr(test, "@");
 
-	for (int i = 0; i < 3; i++) {
-		cout << arrString[i] << endl;
-		cout << "-----------" << endl;
+
+	ifstream foodFile;
+	string line;	
+	foodFile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\food.txt", ios::in);
+	if (foodFile.fail()) {
+		cout << "Wrong file can't oppen \n";
 	}
+	else {
+		while (getline(foodFile, line)) {
+			string* temp = substringArr(line, "@");
+			cout << "Item: " << temp[0] << " amount: " << temp[1] << " price: " << temp[2] << endl;
+			cout << line << "\n";
+		}
+		foodFile.close();
+	}
+	
+	//if (foodFile.is_open()) {
+
+	//}
+
+
+	file.close();
 
 	return 0;
 

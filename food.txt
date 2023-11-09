@@ -1,0 +1,3 @@
+salad@3@10
+burger@1@1.1
+sandwitch@5@21
