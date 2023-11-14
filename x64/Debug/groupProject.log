@@ -1,2 +1,4 @@
-﻿  multimenshionalArr.cpp
-  groupProject.vcxproj -> C:\Users\cooke\Desktop\school\c plus plus\groupProject\x64\Debug\groupProject.exe
+﻿  groupProject.cpp
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(150,10): warning C4101: 'arrString': unreferenced local variable
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(124): warning C4715: 'selectFoodLine': not all control paths return a value
+  groupProject.vcxproj -> C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\x64\Debug\groupProject.exe

@@ -1,0 +1,10 @@
+server@Name
+time@101010
+manager@name
+address@123 main st
+phone@12334324
+tip@15
+guest@4
+checNumber@2343
+date@01/01/2023
+Table@56

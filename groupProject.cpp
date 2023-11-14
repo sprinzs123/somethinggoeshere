@@ -1,62 +1,20 @@
 #include <iostream>
 #include <fstream>
 #include <streambuf>
+#include <string>
 #include <sstream> 
-#include <windows.data.json.h>
 using namespace std;
-string* substringArr(string, string);
-void getValue(string, ofstream);
 
-//void getValue(string search, ofstream file) {
-//	string line;
-//	if (file.is_open()) {
-//		while (getline(file, line)) {
-//			cout << line << "\n";
-//		}
-//	}
-//	file.close();
-//}
-
-
-// splitting string into array. Similar to .substring() in python, C++ doesn't has is... :(
-string* substringArr(string fullString, string delimeter) {
-	// getting all indexes where delimeter would be
-	int indexi[20];
-	string* strBrokenUp = new string[10];
-	int arrIndex = 0;
-	for (int i = 0; i < fullString.length(); i++) {
-		if (fullString[i] == '@') {
-			indexi[arrIndex] = i;
-			arrIndex++;
-		}
-	}
-	cout << arrIndex;
-	//cout << "making substrings from: " << fullString << endl;
-	// making array of substring that is going to return
-	int insertIndex = 0;  // index at where going to inset string into array
-	int prevDelimiter = 0;
-	for (int i = 0; i < 3; i++) {
-		int temp = indexi[i];
-		//cout << "start: " << prevDelimiter << " end: " << temp << endl;
-		string substring =  fullString.substr(prevDelimiter, temp - prevDelimiter); // getting substring
-		cout << substring << endl;
-		strBrokenUp[insertIndex] = substring;
-		insertIndex++;
-		prevDelimiter = temp + 1;  // reseting start of string
-	}
-	return strBrokenUp;
-}
-
-
+// #### New Classes ####
 class CheckMetaData {
-	public:
-		string server;
-		string manager;
-		string time;
-		string phone;
-		string date;
-	    int table;
-		int guests;
+public:
+	string server;
+	string manager;
+	string time;
+	string phone;
+	string date;
+	int table;
+	int guests;
 	// migh not need it since everythin is public scope
 	void setServer(string server) {
 		this->server = server;
@@ -82,25 +40,93 @@ class CheckMetaData {
 };
 
 class Payment {
-	public:
-		string Type;
-		float amount;
-		string id;
+public:
+	string Type;
+	float amount;
+	string id;
 };
 
-class OneFood {
+class FoodItem {
 public:
 	string name;
 	float price;
-	int count;	
+	int count;
+	string code;
+
+	void printString() {
+		cout << "Name: " << name << " price: " << price << " count: " << count << endl;
+	}
 };
 
 class FullCheck {
 	int pk;
 	CheckMetaData metadata;
-	OneFood foodItems[20];
 	Payment payment[20];
 };
+
+// ### New Functions ###
+string* substringArr(string, char, int);
+FoodItem selectFoodLine(string, string, int);
+
+// splitting string into array. Similar to .substring() in python, C++ doesn't has is... :(
+string* substringArr(string fullString, char delimeter, int delimeterCount) {
+	// getting all indexes where delimeter would be
+	int indexi[20];
+	string* strBrokenUp = new string[10];
+	int arrIndex = 0;
+	for (int i = 0; i < fullString.length(); i++) {
+		if (fullString[i] == delimeter) {
+			indexi[arrIndex] = i;
+			arrIndex++;
+		}
+	}
+	//cout <<"Delimiters found: " << arrIndex << endl;
+	if (arrIndex != delimeterCount) {
+		//cout << "Can't parse" << endl;
+		strBrokenUp[0] = "-1";
+		return strBrokenUp;
+	}
+
+	//making array of substring that is going to return
+	//cout << "making substrings from: " << fullString << endl;
+	int insertIndex = 0;  // index at where going to inset string into array
+	int prevDelimiter = 0;
+	for (int i = 0; i < delimeterCount+1; i++) {
+		int temp = indexi[i];
+		//cout << "start: " << prevDelimiter << " end: " << temp << endl;
+		string substring =  fullString.substr(prevDelimiter, temp - prevDelimiter); // getting substring	
+		//cout << "new substrung: " << substring << endl;
+		strBrokenUp[insertIndex] = substring;
+		insertIndex++;
+		prevDelimiter = temp + 1;  // reseting start of string
+	}
+	return strBrokenUp;
+}
+
+// pases lines from food file correctly at matches to needed id
+FoodItem selectFoodLine(string chechId, string line, int delimeterCount) {
+	FoodItem foodItem;
+	if (line.length() > 10 && line.substr(0, 5) == chechId) {
+		string id = line.substr(0, 5);
+		string* arrItems = substringArr(line, '-', delimeterCount);
+		if (arrItems[0] == "-1") {
+			cout << "invalid object" << endl;
+		
+		}
+		else {
+			cout << "valid object " << endl;
+			foodItem.name = arrItems[4];
+			foodItem.price = stof(arrItems[2]);
+			foodItem.count = stoi(arrItems[3]);
+			return foodItem;
+		}		
+	}	
+}
+
+
+
+
+
 
 
 int main()
@@ -119,30 +145,40 @@ int main()
 	strStream << file.rdbuf(); //read the file
 	string strText = strStream.str(); //str holds the content of the file
 	//cout << "File content:" << strText << endl;
-	string test = "one@two@tree";
+	string test = "one@two@";
 
-	//string* arrString;
+	string* arrString;
 	//arrString = substringArr(test, "@");
+	//cout << arrString[0] << endl;
 
 
 	ifstream foodFile;
-	string line;	
-	foodFile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\food.txt", ios::in);
+	string line;
+	foodFile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\food.txt", ios::in);
 	if (foodFile.fail()) {
-		cout << "Wrong file can't oppen \n";
-	}
-	else {
-		while (getline(foodFile, line)) {
-			string* temp = substringArr(line, "@");
-			cout << "Item: " << temp[0] << " amount: " << temp[1] << " price: " << temp[2] << endl;
-			cout << line << "\n";
+		cout << "Wrong file can't open food \n";
+	} else {
+		while (getline(foodFile, line)) {			
+			FoodItem foodItem = selectFoodLine("64337", line, 4);
+			foodItem.printString();
+			
 		}
-		foodFile.close();
 	}
-	
-	//if (foodFile.is_open()) {
+	 
 
+	//ifstream metadataFile;
+	//string line2;
+	//metadataFile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\metadata.txt", ios::in);
+	//if (metadataFile.fail()) {
+	//	cout << "Wrong file can't open metadata \n";
+	//} else {		
+	//	while (getline(metadataFile, line2)) {
+	//		string* tempMeta = substringArr(line2, "@");
+	//		cout << "Key: " << tempMeta[0] << " Value: " << tempMeta[1] << endl;			
+	//	}
+	//	metadataFile.close();
 	//}
+	
 
 
 	file.close();
