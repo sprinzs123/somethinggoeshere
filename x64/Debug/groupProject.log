@@ -1,4 +1,3 @@
 ﻿  groupProject.cpp
-C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(150,10): warning C4101: 'arrString': unreferenced local variable
-C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(124): warning C4715: 'selectFoodLine': not all control paths return a value
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(195,10): warning C4101: 'arrString': unreferenced local variable
   groupProject.vcxproj -> C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\x64\Debug\groupProject.exe

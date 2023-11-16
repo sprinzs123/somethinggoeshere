@@ -1,14 +1,13 @@
-64337-KAJ-4.79-1-Kids Apple Juice
-64337-RDS-4.79-1-Regular Dipping Sauce
-64337-CYO-6.99-1-Kids CYO Alf Sauce Spaghetti Fries
-64337-SCF-3.99-1-Side Chicken Fingers
-64337-CBL-9.29-1-Chocolate Brownie Lasagna
-64337-PCC-8.79-1-Pumpkin Cheesecake
-64337-BPT-4.29-1-Bellini Peach Tea
-64337-6SW-19.29-1-6oz Sirloin Well w/ Salad
-64337-RBL-4.29-1-Raspberry Lemonade
-64337-TOI-20.99-1-Tour of Italy w/ Salad
-64337-TEA-3.69-1-Hot Tea
-64337-CSC-21.49-1-Chicken & Shrimp Carbonara
-64337-FGI-21.49-1-Fagiol
+64337-KAJ-2
+64337-RDS-1
+64337-CYO-4
+64337-SCF-1
+64337-CBL-5
+64337-PCC-1
+64337-BPT-2
+64337-6SW-1
+64337-RBL-1
+64337-TOI-1
+64337-TEA-1
+64337-CSC-1
 

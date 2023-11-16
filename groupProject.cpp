@@ -46,16 +46,30 @@ public:
 	string id;
 };
 
-class FoodItem {
-public:
-	string name;
-	float price;
-	int count;
-	string code;
+class FoodItem {	
+	private:
+		string name;
+		float price;
+		int count;
 
-	void printString() {
-		cout << "Name: " << name << " price: " << price << " count: " << count << endl;
-	}
+	public:
+		FoodItem(string _name, float _price, int _count) {
+			name = _name;
+			price = _price;
+			count = _count;
+		}	
+
+		void printString() {
+			cout << "Name: " << name << " price: " << price << " count: " << count << endl;
+		}
+
+		float getPrice() {
+			return price;
+		}
+
+		int getCount() {
+			return count;
+		}
 };
 
 class FullCheck {
@@ -102,26 +116,57 @@ string* substringArr(string fullString, char delimeter, int delimeterCount) {
 	}
 	return strBrokenUp;
 }
+// find food items name and price from look up table
+
 
 // pases lines from food file correctly at matches to needed id
-FoodItem selectFoodLine(string chechId, string line, int delimeterCount) {
-	FoodItem foodItem;
-	if (line.length() > 10 && line.substr(0, 5) == chechId) {
+// use look up table to find food name and price from look up table
+FoodItem selectFoodLine(string chechId, string line, int delimeterCount) {	
+	string foodName;
+	float foodPrice = -1;
+	int foodCount = -1;
+	if (line.length() > 7 && line.substr(0, 5) == chechId) {
 		string id = line.substr(0, 5);
 		string* arrItems = substringArr(line, '-', delimeterCount);
 		if (arrItems[0] == "-1") {
-			cout << "invalid object" << endl;
-		
+			//cout << "invalid object" << endl;		
 		}
 		else {
-			cout << "valid object " << endl;
-			foodItem.name = arrItems[4];
-			foodItem.price = stof(arrItems[2]);
-			foodItem.count = stoi(arrItems[3]);
-			return foodItem;
+			//cout << "valid object " << endl;
+			foodCount = stoi(arrItems[2]);
+			string checkFoodId = arrItems[0]; // check id from input line
+			string foodOrderCode = arrItems[1];
+			//cout << checkFoodId << endl;
+			if (chechId == checkFoodId){     
+				//cout << "Getting from look up table" << endl;
+				ifstream foodTable;
+				string line;
+				foodTable.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\food_table.txt", ios::in);
+				if (foodTable.fail()) {
+					//cout << "Wrong file can't open food look up table \n";
+				}
+				else {
+					bool searching = true;
+					while (getline(foodTable, line) && searching) {
+						string* foodItem = substringArr(line, '-', 2);
+						string foodCode = foodItem[0];
+						// checking if food code from look up table matches food code for the item
+						if (foodCode == foodOrderCode) {
+							foodPrice = stof(foodItem[1]);
+							foodName = foodItem[2];
+							searching = false;
+							foodTable.close();
+						}
+					}
+				}
+			}
 		}		
 	}	
+
+	FoodItem foodItem = FoodItem(foodName, foodPrice, foodCount);
+	return foodItem;
 }
+
 
 
 
@@ -154,15 +199,20 @@ int main()
 
 	ifstream foodFile;
 	string line;
+	float totalPrice = 0;
 	foodFile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\food.txt", ios::in);
 	if (foodFile.fail()) {
 		cout << "Wrong file can't open food \n";
 	} else {
 		while (getline(foodFile, line)) {			
-			FoodItem foodItem = selectFoodLine("64337", line, 4);
-			foodItem.printString();
-			
+			FoodItem foodItem = selectFoodLine("64337", line, 2);
+			if (foodItem.getCount() != -1) { //get only valid food items
+				foodItem.printString();
+				totalPrice += foodItem.getPrice() + foodItem.getCount();
+			}	
 		}
+	cout << "Total: " << totalPrice << endl;
+	foodFile.close();
 	}
 	 
 
