@@ -3,7 +3,12 @@
 #include <streambuf>
 #include <string>
 #include <sstream> 
+
 using namespace std;
+
+// global varibles, mostly to know size of arrays
+int foodIndex = 0;
+int cardCount = 0;
 
 // #### New Classes ####
 class CheckMetaData {
@@ -46,6 +51,51 @@ public:
 	string id;
 };
 
+// glass for holding card payments
+// will need to add toString() and getters 
+class CardPayment {
+private:
+	string AID;
+	string TC;
+	string label;
+	string source;
+	string authCode;
+	string cardNumber;
+	string verification;
+	int transactionNum;
+	float amount;
+public:
+	CardPayment(string _cardNumber, int _transactionNum, float _amount, string _AID, string _TC, string _label, string _source, string _authCode,  string _verification) {
+		AID = _AID;
+		TC = _TC;
+		label = _label;
+		source = _source;
+		authCode = _authCode;
+		cardNumber = _cardNumber;
+		verification = _verification;
+		transactionNum = _transactionNum;
+		amount = _amount;
+	}
+	CardPayment() {
+		amount = 0;
+	}
+	void setAID(string _AID) {AID = _AID;}
+	void setTC(string _AID) {AID = _AID;}
+	void setLabel(string _label) { label = _label; }
+	void setSource(string _source) { source = _source; }
+	void setAuthCode(string _authCode) { authCode = _authCode; }
+	void setCardNum(string _cardNum) { cardNumber = _cardNum; }
+	void setVerification(string _verification) { verification = _verification; }
+	void setTransactionNum(int _num) { transactionNum= _num; }
+	void setAmount(float _amount) { amount = _amount; }
+
+	void print() {
+		cout << "AID: " << AID << " TC: " << TC << " label: " << label << " source: " << source << "authCode: " << authCode << " cardNum: " << cardNumber << " verification " << verification << " transactionNum: " << transactionNum << " amount " << amount << endl;
+	}
+
+
+};
+
 class FoodItem {	
 	private:
 		string name;
@@ -58,6 +108,10 @@ class FoodItem {
 			price = _price;
 			count = _count;
 		}	
+
+		FoodItem() {
+			name = "-1";
+		}
 
 		void printString() {
 			cout << "Name: " << name << " price: " << price << " count: " << count << endl;
@@ -81,6 +135,7 @@ class FullCheck {
 // ### New Functions ###
 string* substringArr(string, char, int);
 FoodItem selectFoodLine(string, string, int);
+CardPayment selectCardLine(string, string, int);
 
 // splitting string into array. Similar to .substring() in python, C++ doesn't has is... :(
 string* substringArr(string fullString, char delimeter, int delimeterCount) {
@@ -167,71 +222,65 @@ FoodItem selectFoodLine(string chechId, string line, int delimeterCount) {
 	return foodItem;
 }
 
+CardPayment selectCardLine(string chechId, string line, int delimeterCount) {
+	CardPayment cardPayment;
+	string* arrItems = substringArr(line, '-', delimeterCount);
+	// valid card, found all items, arraay of string is correct size
+	if (arrItems[0] != "-1") {		
+		CardPayment newCard = CardPayment(arrItems[0], stoi(arrItems[1]), stof(arrItems[2]), arrItems[3], arrItems[4], arrItems[5], arrItems[6], arrItems[7], arrItems[8] );
+		cardPayment = newCard; // assign new items to empty card object
+		//newCard.print();
+	}
+	cardPayment.print();
+	return cardPayment;
 
-
-
-
-
+}
 
 
 int main()
 {
-	string contents;
-	ifstream file;
-	file.open("C:\\Users\\cooke\\Desktop\\school\\p_data.txt", ios::in);
-	if (file.fail()) {
-		cout << "WROOOOOONDFFF";
-	}
-	//getValue("tete", file);
+	// ### CREATING INITIAL OBJECTS, ARRAYS, AND TEST PARSING BEFORE GO INSIDE MENU ### \\
 
-
-
-	stringstream strStream;
-	strStream << file.rdbuf(); //read the file
-	string strText = strStream.str(); //str holds the content of the file
-	//cout << "File content:" << strText << endl;
-	string test = "one@two@";
-
-	string* arrString;
-	//arrString = substringArr(test, "@");
-	//cout << arrString[0] << endl;
-
-
+	// GETTING ALL VALID FOOD ITEMS
+	// will have an array of all food items
+	FoodItem foodArray[20];
 	ifstream foodFile;
-	string line;
-	float totalPrice = 0;
+	string line;	
 	foodFile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\food.txt", ios::in);
 	if (foodFile.fail()) {
 		cout << "Wrong file can't open food \n";
-	} else {
+	} else {		
 		while (getline(foodFile, line)) {			
 			FoodItem foodItem = selectFoodLine("64337", line, 2);
 			if (foodItem.getCount() != -1) { //get only valid food items
-				foodItem.printString();
-				totalPrice += foodItem.getPrice() + foodItem.getCount();
+				foodArray[foodIndex] = foodItem;
+
+				foodIndex += 1;
 			}	
 		}
-	cout << "Total: " << totalPrice << endl;
 	foodFile.close();
 	}
-	 
-
-	//ifstream metadataFile;
-	//string line2;
-	//metadataFile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\metadata.txt", ios::in);
-	//if (metadataFile.fail()) {
-	//	cout << "Wrong file can't open metadata \n";
-	//} else {		
-	//	while (getline(metadataFile, line2)) {
-	//		string* tempMeta = substringArr(line2, "@");
-	//		cout << "Key: " << tempMeta[0] << " Value: " << tempMeta[1] << endl;			
-	//	}
-	//	metadataFile.close();
-	//}
 	
+	// GET VALID PAYMENTS
+	ifstream cardItems;
+	cardItems.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\cards.txt", ios::in);
+	if (cardItems.fail()) {
+		cout << "Wrong file can't open card payments \n";
+	}
+	else {
+		while (getline(cardItems, line)) {
+			CardPayment cardPayment = selectCardLine("64337", line, 7);
+			//if (cardPayment.getCount() != -1) { //get only valid food items
+			//	foodArray[foodIndex] = foodItem;
+
+			//	foodIndex += 1;
+			//}
+		}
+		cardItems.close();
+	}
 
 
-	file.close();
+	// menu while loop will go here
 
 	return 0;
 
