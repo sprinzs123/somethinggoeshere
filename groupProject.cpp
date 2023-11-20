@@ -3,6 +3,7 @@
 #include <streambuf>
 #include <string>
 #include <sstream> 
+#include <fstream>
 
 using namespace std;
 
@@ -92,7 +93,9 @@ public:
 	void print() {
 		cout << "AID: " << AID << " TC: " << TC << " label: " << label << " source: " << source << "authCode: " << authCode << " cardNum: " << cardNumber << " verification " << verification << " transactionNum: " << transactionNum << " amount " << amount << endl;
 	}
-
+	string printAID() {
+		return "AID: " + AID;
+	}
 
 };
 
@@ -229,9 +232,9 @@ CardPayment selectCardLine(string chechId, string line, int delimeterCount) {
 	if (arrItems[0] != "-1") {		
 		CardPayment newCard = CardPayment(arrItems[0], stoi(arrItems[1]), stof(arrItems[2]), arrItems[3], arrItems[4], arrItems[5], arrItems[6], arrItems[7], arrItems[8] );
 		cardPayment = newCard; // assign new items to empty card object
-		//newCard.print();
+		//cout << newCard.printAID() << endl;
 	}
-	cardPayment.print();
+	cout << cardPayment.printAID() << endl;
 	return cardPayment;
 
 }
@@ -263,13 +266,15 @@ int main()
 	
 	// GET VALID PAYMENTS
 	ifstream cardItems;
+	CardPayment cardPayment;
 	cardItems.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\cards.txt", ios::in);
 	if (cardItems.fail()) {
 		cout << "Wrong file can't open card payments \n";
 	}
 	else {
 		while (getline(cardItems, line)) {
-			CardPayment cardPayment = selectCardLine("64337", line, 7);
+			CardPayment cardPaymentTemp = selectCardLine("64337", line, 7);
+			cardPayment = cardPaymentTemp;
 			//if (cardPayment.getCount() != -1) { //get only valid food items
 			//	foodArray[foodIndex] = foodItem;
 
@@ -278,7 +283,11 @@ int main()
 		}
 		cardItems.close();
 	}
-
+	ofstream myfile;
+	myfile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\output2.txt", ios::in);
+	myfile << "----------";
+	myfile << cardPayment.printAID();
+	myfile.close();
 
 	// menu while loop will go here
 
