@@ -1,1 +1,20 @@
-----------AID: A0000000031010
+Transaction #: 2098728448
+
+AID: A0000000031010
+TC: 14B226CE80F83F18
+App Name/Label: VISA CREDIT CVM
+Card Verification: Fail 
+Tran DataSource: chip
+Transaction #: 2098728448
+
+AID: A0000000031010
+TC: 14B226CE80F83F18
+App Name/Label: VISA CREDIT CVM
+Card Verification: Fail 
+Tran DataSource: chip
+----------------------------------------
+Card Number                    Auth Code
+xxxxxxxxxxxx0903                  02369D
+
+Check Amount                    4.140000
+----------------------------------------

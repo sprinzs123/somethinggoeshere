@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream> 
 #include <fstream>
-
+#include <iomanip> 
 using namespace std;
 
 // global varibles, mostly to know size of arrays
@@ -93,9 +93,18 @@ public:
 	void print() {
 		cout << "AID: " << AID << " TC: " << TC << " label: " << label << " source: " << source << "authCode: " << authCode << " cardNum: " << cardNumber << " verification " << verification << " transactionNum: " << transactionNum << " amount " << amount << endl;
 	}
-	string printAID() {
-		return "AID: " + AID;
-	}
+	string printAID() {	return "AID: " + AID;}
+	string printTC() { return "TC: " + TC; }
+	string printLabel() { return "App Name/Label: " + label; }
+	string printVerification() { return "Card Verification: Fail " + verification; }
+	string printTransaction() { return "Transaction #: " + to_string(transactionNum); }
+	string printCardNumber() { return "xxxxxxxxxxxx" + cardNumber; }
+	string printChipAuth() { return authCode; }
+	string printSource() { return "Tran DataSource: " + source; }
+	string printAmout() { return to_string(amount); }
+	float getAmount() { return amount; }
+	string printHeader() { return printTransaction() + "\n" + "\n" +  printAID() + "\n" + printTC() + "\n" + printLabel() + "\n" + printVerification() + "\n" + printSource() + "\n"; }
+	//string printHeader() { return printTransaction(); }
 
 };
 
@@ -232,9 +241,7 @@ CardPayment selectCardLine(string chechId, string line, int delimeterCount) {
 	if (arrItems[0] != "-1") {		
 		CardPayment newCard = CardPayment(arrItems[0], stoi(arrItems[1]), stof(arrItems[2]), arrItems[3], arrItems[4], arrItems[5], arrItems[6], arrItems[7], arrItems[8] );
 		cardPayment = newCard; // assign new items to empty card object
-		//cout << newCard.printAID() << endl;
 	}
-	cout << cardPayment.printAID() << endl;
 	return cardPayment;
 
 }
@@ -264,7 +271,7 @@ int main()
 	foodFile.close();
 	}
 	
-	// GET VALID PAYMENTS
+	// GET VALID CARD PAYMENTS
 	ifstream cardItems;
 	CardPayment cardPayment;
 	cardItems.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\cards.txt", ios::in);
@@ -273,20 +280,35 @@ int main()
 	}
 	else {
 		while (getline(cardItems, line)) {
-			CardPayment cardPaymentTemp = selectCardLine("64337", line, 7);
+			CardPayment cardPaymentTemp = selectCardLine("", line, 7);
 			cardPayment = cardPaymentTemp;
-			//if (cardPayment.getCount() != -1) { //get only valid food items
-			//	foodArray[foodIndex] = foodItem;
 
-			//	foodIndex += 1;
-			//}
 		}
 		cardItems.close();
 	}
+
+	cout << cardPayment.printHeader();
+	cout << "----------------------------------------" << endl;
+	cout << left << setfill(' ') << setw(20) << "Card Number" << right << setfill(' ') << setw(20) << "Auth Code" << endl;
+	cout << left << setfill(' ') << setw(20) << cardPayment.printCardNumber() << right << setfill(' ') << setw(20) <<  cardPayment.printChipAuth() << endl << endl;
+	cout << left << setfill(' ') << setw(20) << "Check Amount" << right << setfill(' ') << setw(20) << cardPayment.printAmout() << endl;
+	cout << "----------------------------------------" << endl;
+
 	ofstream myfile;
+
 	myfile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\output2.txt", ios::in);
-	myfile << "----------";
-	myfile << cardPayment.printAID();
+	myfile << cardPayment.printHeader();
+
+	myfile << cardPayment.printHeader();
+	myfile << "----------------------------------------" << endl;
+	myfile << left << setfill(' ') << setw(20) << "Card Number" << right << setfill(' ') << setw(20) << "Auth Code" << endl;
+	myfile << left << setfill(' ') << setw(20) << cardPayment.printCardNumber() << right << setfill(' ') << setw(20) << cardPayment.printChipAuth() << endl << endl;
+	myfile << left << setfill(' ') << setw(20) << "Check Amount" << right << setfill(' ') << setw(20) << cardPayment.printAmout() << endl;
+	myfile << "----------------------------------------" << endl;
+
+	
+
+
 	myfile.close();
 
 	// menu while loop will go here
