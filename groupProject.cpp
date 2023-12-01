@@ -10,6 +10,11 @@ using namespace std;
 // global varibles, mostly to know size of arrays
 int foodIndex = 0;
 int cardCount = 0;
+char menuReturn;
+char userValidator;
+char menuReturn;
+char userValidator;
+int menuOption;
 
 // #### New Classes ####
 class CheckMetaData {
@@ -149,6 +154,15 @@ string* substringArr(string, char, int);
 FoodItem selectFoodLine(string, string, int);
 CardPayment selectCardLine(string, string, int);
 
+// ### menu function
+void mainMenu();
+void printOne();
+void printTwo(CardPayment);
+void saveOne();
+void saveTwo(CardPayment);
+void userInput();
+
+
 // splitting string into array. Similar to .substring() in python, C++ doesn't has is... :(
 string* substringArr(string fullString, char delimeter, int delimeterCount) {
 	// getting all indexes where delimeter would be
@@ -249,7 +263,7 @@ CardPayment selectCardLine(string chechId, string line, int delimeterCount) {
 
 int main()
 {
-	// ### CREATING INITIAL OBJECTS, ARRAYS, AND TEST PARSING BEFORE GO INSIDE MENU ### \\
+	// ### CREATING INITIAL OBJECTS, ARRAYS, AND DOIND PARSING BEFORE GO INSIDE MENU ### \\
 
 	// GETTING ALL VALID FOOD ITEMS
 	// will have an array of all food items
@@ -264,7 +278,6 @@ int main()
 			FoodItem foodItem = selectFoodLine("64337", line, 2);
 			if (foodItem.getCount() != -1) { //get only valid food items
 				foodArray[foodIndex] = foodItem;
-
 				foodIndex += 1;
 			}	
 		}
@@ -287,32 +300,81 @@ int main()
 		cardItems.close();
 	}
 
-	cout << cardPayment.printHeader();
-	cout << "----------------------------------------" << endl;
-	cout << left << setfill(' ') << setw(20) << "Card Number" << right << setfill(' ') << setw(20) << "Auth Code" << endl;
-	cout << left << setfill(' ') << setw(20) << cardPayment.printCardNumber() << right << setfill(' ') << setw(20) <<  cardPayment.printChipAuth() << endl << endl;
-	cout << left << setfill(' ') << setw(20) << "Check Amount" << right << setfill(' ') << setw(20) << cardPayment.printAmout() << endl;
-	cout << "----------------------------------------" << endl;
+   	do {
+		mainMenu();
+		if (menuOption == 1) {
+			printOne();
+			userInput();
+		}
+		else if (menuOption == 2) {
+			cout << system("cls");
+			printTwo(cardPayment);
+			userInput();
+		}
+		else if (menuOption == 3) {
+			cout << system("cls");
+			saveOne();
+			userInput();
 
-	ofstream myfile;
+		}
+		else if (menuOption == 4) {
+			cout << system("cls"); 		
+			saveTwo(cardPayment);
+			userInput();
 
-	myfile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\output2.txt", ios::in);
-	myfile << cardPayment.printHeader();
+		}
+		else if (menuOption == 5) {
+			cout << system("cls");
+			cout << "-----------> THANKS <-----------" << endl;
+			exit(0);
+			userInput();
 
-	myfile << cardPayment.printHeader();
-	myfile << "----------------------------------------" << endl;
-	myfile << left << setfill(' ') << setw(20) << "Card Number" << right << setfill(' ') << setw(20) << "Auth Code" << endl;
-	myfile << left << setfill(' ') << setw(20) << cardPayment.printCardNumber() << right << setfill(' ') << setw(20) << cardPayment.printChipAuth() << endl << endl;
-	myfile << left << setfill(' ') << setw(20) << "Check Amount" << right << setfill(' ') << setw(20) << cardPayment.printAmout() << endl;
-	myfile << "----------------------------------------" << endl;
+		}
+		else {
+			cout << "Invalid input, try again" << endl;
+			userInput();			
+		}
+
+	} while (menuReturn == 'Y');
+
+
 
 	
 
 
-	myfile.close();
 
 	// menu while loop will go here
 
 	return 0;
 
 }
+
+
+
+// ######## Menu functions will go here
+void mainMenu(){
+	cout << "spmenthi" << endl;
+};
+void printOne(){};
+void saveOne(){};
+
+void printTwo(CardPayment cardPayment){
+	cout << cardPayment.printHeader();
+	cout << "----------------------------------------" << endl;
+	cout << left << setfill(' ') << setw(20) << "Card Number" << right << setfill(' ') << setw(20) << "Auth Code" << endl;
+	cout << left << setfill(' ') << setw(20) << cardPayment.printCardNumber() << right << setfill(' ') << setw(20) <<  cardPayment.printChipAuth() << endl << endl;
+	cout << left << setfill(' ') << setw(20) << "Check Amount" << right << setfill(' ') << setw(20) << cardPayment.printAmout() << endl;
+	cout << "----------------------------------------" << endl;
+};
+
+void saveTwo(CardPayment cardPayment){
+	ofstream myfile;
+	myfile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\output2.txt", ios::in);
+	myfile << cardPayment.printHeader();
+	myfile << "----------------------------------------" << endl;
+	myfile << left << setfill(' ') << setw(20) << "Card Number" << right << setfill(' ') << setw(20) << "Auth Code" << endl;
+	myfile << left << setfill(' ') << setw(20) << cardPayment.printCardNumber() << right << setfill(' ') << setw(20) << cardPayment.printChipAuth() << endl << endl;
+	myfile << left << setfill(' ') << setw(20) << "Check Amount" << right << setfill(' ') << setw(20) << cardPayment.printAmout() << endl;
+	myfile << "----------------------------------------" << endl;
+	myfile.close();
+};
