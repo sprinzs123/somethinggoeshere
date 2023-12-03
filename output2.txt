@@ -1,8 +1,24 @@
-**************************************** 
-Total data with the minimum rate (mph) => 7
-Total data with the minimum rate (mph) => 27
-Total data with the minimum rate (mph) => 14
-======================================= 
-The minimum speed (mph) is: 28
-The maximum speed (mph) is: 101
-The average (mph) is:       57
+2 Kids Apple Juice                            4.79
+
+1 Regular Dipping Sauce                       4.79
+
+4 Kids CYO Alf Sauce Spaghetti Fries          6.99
+
+1 Side Chicken Fingers                        3.99
+
+5 Chocolate Brownie Lasagna                   9.29
+
+1 Pumpkin Cheesecake                          8.79
+
+2 Bellini Peach Tea                           4.29
+
+1 6oz Sirloin Well w/ Salad                  19.29
+
+1 Raspberry Lemonade                          4.29
+
+1 Tour of Italy w/ Salad                     20.99
+
+1 Hot Tea                                     3.69
+
+1 Chicken & Shrimp Carbonara                 21.49
+

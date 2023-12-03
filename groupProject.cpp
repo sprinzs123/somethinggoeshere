@@ -12,8 +12,6 @@ int foodIndex = 0;
 int cardCount = 0;
 char menuReturn;
 char userValidator;
-char menuReturn;
-char userValidator;
 int menuOption;
 
 // #### New Classes ####
@@ -48,13 +46,6 @@ public:
 	void setGuests(int guests) {
 		this->guests = guests;
 	}
-};
-
-class Payment {
-public:
-	string Type;
-	float amount;
-	string id;
 };
 
 // glass for holding card payments
@@ -130,24 +121,14 @@ class FoodItem {
 			name = "-1";
 		}
 
-		void printString() {
-			cout << "Name: " << name << " price: " << price << " count: " << count << endl;
-		}
+		void printString() {cout << "Name: " << name << " price: " << price << " count: " << count << endl;}
+		float getPrice() {return price;}
+		int getCount() {return count;}
+		string getName() { return name; }
+		string getLeft() { return to_string(count) + " " + name; }
 
-		float getPrice() {
-			return price;
-		}
-
-		int getCount() {
-			return count;
-		}
 };
 
-class FullCheck {
-	int pk;
-	CheckMetaData metadata;
-	Payment payment[20];
-};
 
 // ### New Functions ###
 string* substringArr(string, char, int);
@@ -156,9 +137,9 @@ CardPayment selectCardLine(string, string, int);
 
 // ### menu function
 void mainMenu();
-void printOne();
+void printOne(FoodItem*);
 void printTwo(CardPayment);
-void saveOne();
+void saveOne(FoodItem*);
 void saveTwo(CardPayment);
 void userInput();
 
@@ -300,26 +281,27 @@ int main()
 		cardItems.close();
 	}
 
-   	do {
+	// #### menu items ##############
+	
+	menuReturn == 'Y';
+	do {
 		mainMenu();
 		if (menuOption == 1) {
-			printOne();
+			printOne(foodArray);
 			userInput();
 		}
 		else if (menuOption == 2) {
 			cout << system("cls");
-			printTwo(cardPayment);
+			saveOne(foodArray);
 			userInput();
 		}
 		else if (menuOption == 3) {
 			cout << system("cls");
-			saveOne();
 			userInput();
 
 		}
 		else if (menuOption == 4) {
-			cout << system("cls"); 		
-			saveTwo(cardPayment);
+			cout << system("cls");
 			userInput();
 
 		}
@@ -330,20 +312,14 @@ int main()
 			userInput();
 
 		}
-		else {
-			cout << "Invalid input, try again" << endl;
-			userInput();			
-		}
+		//else {
+		//	cout << "Invalid input, try again" << endl;
+		//	mainMenu();
+		//	userInput();
+		//}
 
 	} while (menuReturn == 'Y');
 
-
-
-	
-
-
-
-	// menu while loop will go here
 
 	return 0;
 
@@ -353,10 +329,28 @@ int main()
 
 // ######## Menu functions will go here
 void mainMenu(){
-	cout << "spmenthi" << endl;
+	cout << "Menu Items" << endl;
+	cout << "Choose 1: " << endl;
+	cin >> menuOption;
+
 };
-void printOne(){};
-void saveOne(){};
+void printOne(FoodItem* foodItems){
+	// printing food items
+	for (int i = 0; i < foodIndex; i++) {		
+		cout << left << setfill(' ') << setw(40) << foodItems[i].getLeft() << right << setfill(' ') << setw(10) << foodItems[i].getPrice() << endl << endl;
+	}
+};
+
+void saveOne(FoodItem* foodItems){
+	ofstream myfile;
+	myfile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\output2.txt", ios::in);
+	for (int i = 0; i < foodIndex; i++) {
+		myfile << left << setfill(' ') << setw(40) << foodItems[i].getLeft() << right << setfill(' ') << setw(10) << foodItems[i].getPrice() << endl << endl;
+	}
+	myfile.close();
+
+
+};
 
 void printTwo(CardPayment cardPayment){
 	cout << cardPayment.printHeader();
@@ -378,3 +372,20 @@ void saveTwo(CardPayment cardPayment){
 	myfile << "----------------------------------------" << endl;
 	myfile.close();
 };
+
+
+// make sure that user can only enter Y or N 
+// outside of scope for this tests
+void userInput() {
+	cout << "Go to main menu [Y/N] => ";
+	cin >> userValidator;
+	cout << "Input: " << userValidator << endl;
+	if ((userValidator == 'Y') || (userValidator == 'N')) {
+		menuReturn = userValidator;
+		cout << system("cls");
+	}
+	else {
+		cout << "Incorect Input, only can do Y or N" << endl;
+		userInput(); // recursevely call this menu untill correct input is provided
+	}
+}
