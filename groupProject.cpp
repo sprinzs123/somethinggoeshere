@@ -7,6 +7,18 @@
 #include <iomanip> 
 using namespace std;
 
+// Color
+void red() { printf("\033[1;31m"); }
+void green() { printf("\033[1;32m"); }
+void yellow() { printf("\033[1;33m"); }
+void blue() { printf("\033[1;34m"); }
+void purple() { printf("\033[1;35m"); }
+void cyan() { printf("\033[1;36m"); }
+void teal() { printf("\033[0;36m"); }
+void white() { printf("\033[1;37m"); }
+void reset() { printf("\033[1;0m"); }
+
+
 // global varibles, mostly to know size of arrays
 int foodIndex = 0;
 int cardCount = 0;
@@ -137,7 +149,7 @@ CardPayment selectCardLine(string, string, int);
 
 // ### menu function
 void mainMenu();
-void printOne(FoodItem*);
+void printOne(FoodItem*, float);
 void printTwo(CardPayment);
 void saveOne(FoodItem*);
 void saveTwo(CardPayment);
@@ -229,6 +241,7 @@ FoodItem selectFoodLine(string chechId, string line, int delimeterCount) {
 	return foodItem;
 }
 
+// creates credit card object from string
 CardPayment selectCardLine(string chechId, string line, int delimeterCount) {
 	CardPayment cardPayment;
 	string* arrItems = substringArr(line, '-', delimeterCount);
@@ -251,6 +264,7 @@ int main()
 	FoodItem foodArray[20];
 	ifstream foodFile;
 	string line;	
+	float price = 0;
 	foodFile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\food.txt", ios::in);
 	if (foodFile.fail()) {
 		cout << "Wrong file can't open food \n";
@@ -259,6 +273,7 @@ int main()
 			FoodItem foodItem = selectFoodLine("64337", line, 2);
 			if (foodItem.getCount() != -1) { //get only valid food items
 				foodArray[foodIndex] = foodItem;
+				price += foodItem.getPrice();
 				foodIndex += 1;
 			}	
 		}
@@ -287,7 +302,8 @@ int main()
 	do {
 		mainMenu();
 		if (menuOption == 1) {
-			printOne(foodArray);
+			cout << system("cls");
+			printOne(foodArray, price);
 			userInput();
 		}
 		else if (menuOption == 2) {
@@ -297,11 +313,13 @@ int main()
 		}
 		else if (menuOption == 3) {
 			cout << system("cls");
+			printTwo(cardPayment);
 			userInput();
 
 		}
 		else if (menuOption == 4) {
 			cout << system("cls");
+			printTwo(cardPayment);
 			userInput();
 
 		}
@@ -312,35 +330,44 @@ int main()
 			userInput();
 
 		}
-		//else {
-		//	cout << "Invalid input, try again" << endl;
-		//	mainMenu();
-		//	userInput();
-		//}
+		else {
+			cout << "Invalid input, try again" << endl;
+			userInput();
+		}
 
 	} while (menuReturn == 'Y');
-
-
 	return 0;
-
 }
-
 
 
 // ######## Menu functions will go here
 void mainMenu(){
 	cout << "Menu Items" << endl;
-	cout << "Choose 1: " << endl;
+	cout << "Working 1, 2, 3, 4: ";
 	cin >> menuOption;
 
 };
-void printOne(FoodItem* foodItems){
+// print first check
+
+void printOne(FoodItem* foodItems, float price){
 	// printing food items
 	for (int i = 0; i < foodIndex; i++) {		
 		cout << left << setfill(' ') << setw(40) << foodItems[i].getLeft() << right << setfill(' ') << setw(10) << foodItems[i].getPrice() << endl << endl;
 	}
+	cout << "Subtotal " << price << endl; // enter location from subtotal
+	cout << "Sales tax " << price << 0.18 << endl; // enter location from sales tax
+	cout << "Please pay this amount \n";
+	cout << "Total " << price + price * 0.18 << endl; // enter location from Total
+	cout << "------------------------------------------------------------------\n";
+	cout << "Gratuity Not Included. Suggested amounts are\n";
+	cout << "provided for your convenience.\n";
+	cout << "------------------------------------------------------------------\n";
+	cout << "Suggested gratuity is 22% -- $" << price * 0.22 <<endl;
+	cout << "Calculated after tax  20% -- $" << price * 0.20 << endl;
+	cout << "and before discounts  18% -- $" << price * 0.18 << endl;
 };
 
+//save first check
 void saveOne(FoodItem* foodItems){
 	ofstream myfile;
 	myfile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\output2.txt", ios::in);
@@ -351,7 +378,7 @@ void saveOne(FoodItem* foodItems){
 
 
 };
-
+// print second check
 void printTwo(CardPayment cardPayment){
 	cout << cardPayment.printHeader();
 	cout << "----------------------------------------" << endl;
@@ -361,7 +388,8 @@ void printTwo(CardPayment cardPayment){
 	cout << "----------------------------------------" << endl;
 };
 
-void saveTwo(CardPayment cardPayment){
+// save second check
+void saveTwo(CardPayment cardPayment){ 
 	ofstream myfile;
 	myfile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\output2.txt", ios::in);
 	myfile << cardPayment.printHeader();
@@ -372,6 +400,7 @@ void saveTwo(CardPayment cardPayment){
 	myfile << "----------------------------------------" << endl;
 	myfile.close();
 };
+
 
 
 // make sure that user can only enter Y or N 
