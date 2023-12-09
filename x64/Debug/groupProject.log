@@ -1,3 +1,5 @@
 ﻿  groupProject.cpp
-C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(301,13): warning C4553: '==': result of expression not used; did you intend '='?
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(324,13): warning C4553: '==': result of expression not used; did you intend '='?
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(462,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(463,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   groupProject.vcxproj -> C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\x64\Debug\groupProject.exe
