@@ -6,6 +6,8 @@
 #include <fstream>
 #include <iomanip> 
 #include <sstream>
+#include <string>
+
 using namespace std;
 
 // Color
@@ -26,6 +28,7 @@ int cardCount = 0;
 char menuReturn;
 char userValidator;
 int menuOption;
+string checkID = "64337";
 
 // #### New Classes ####
 class CheckMetaData {
@@ -50,7 +53,13 @@ public:
 	void print() {
 		cout << "Server: " << server << "Manager: " << manager << "Time " << time << "Date " << date << "Table " << table << "Guests " << guests;
 	}
-	   
+	string getManagerLine() { return "General Manager: " + manager; }
+	string getSeveLine() { return "Proudly served by : " + server; }
+	string getTime() { return time; }
+	string tableLine(){	return "Table " + to_string(table);}
+	string guestLine() { return "Guests " + to_string(guests); }	   
+	string getDate() { return date; }
+	string getServer(){return server;}
 };
 
 // glass for holding card payments
@@ -143,18 +152,18 @@ CardPayment selectCardLine(string, string, int);
 CheckMetaData createMeta();
 void printPrice(float);
 void savePrice(float, ofstream);
-void printHeader();
+void printHeader(CheckMetaData);
 
 
 // ### menu function
 void mainMenu();
-void printOne(FoodItem*, float);
-void printTwo(CardPayment, float);
-void saveOne(FoodItem*, float);
-void saveTwo(CardPayment);
+void printOne(FoodItem*, float, CheckMetaData);
+void printTwo(CardPayment, float, CheckMetaData);
+void saveOne(FoodItem*, float, CheckMetaData);
+void saveTwo(CardPayment, float, CheckMetaData);
 void userInput();
 void printData();
-void printFooter();
+void printFooter(CheckMetaData);
 
 
 // splitting string into array. Similar to .substring() in python, C++ doesn't has is... :(
@@ -257,22 +266,23 @@ CardPayment selectCardLine(string chechId, string line, int delimeterCount) {
 CheckMetaData createMeta() {
 	ifstream myfile;
 	myfile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\metadata.txt", ios::in);
-	try
-	{
-		string line;
-		getline(myfile, line);
-		string* arrData = substringArr(line, '-', 5);
-		myfile.close();
-		return CheckMetaData(arrData[0], arrData[1], arrData[2], arrData[3], stoi(arrData[4]), stoi(arrData[5]));
+	string line;
+	getline(myfile, line);
+	myfile.close();
 
+	string* arrData = substringArr(line, '-', 6);
+	if (arrData[6] == checkID && arrData[0] != "-1") {	
+		try {
+			return CheckMetaData(arrData[0], arrData[1], arrData[2], arrData[3], stoi(arrData[4]), stoi(arrData[5]));
+		} 
+		catch (string line) {
+			return CheckMetaData("", "", "", "", 0, 0);
+		}
 	}
-	catch (const std::exception&)
-	{
-		myfile.close();
+	else {
 		return CheckMetaData("", "", "", "", 0, 0);
-
 	}
-
+	
 }
 
 
@@ -319,7 +329,7 @@ int main()
 
 	// #### menu items ##############
 	CheckMetaData metaData = createMeta();
-	metaData.print();
+
 	cout << endl;
 	menuReturn == 'Y';
 	do {
@@ -333,25 +343,25 @@ int main()
 		else if (menuOption == 2) {
 			cout << system("cls");
 			cout << endl;
-			printOne(foodArray, price);
+			printOne(foodArray, price, metaData);
 			userInput();
 		}
 		else if (menuOption == 3) {
 			cout << system("cls");
 			cout << endl;
-			printTwo(cardPayment, price);
+			printTwo(cardPayment, price, metaData);
 			userInput();
 		}
 		else if (menuOption == 4) {
 			cout << system("cls");
 			cout << endl;
-			saveOne(foodArray, price);
+			saveOne(foodArray, price, metaData);
 			userInput();
 		}
 		else if (menuOption == 5) {
 			cout << system("cls");
 			cout << endl;
-			saveTwo(cardPayment);
+			saveTwo(cardPayment, price, metaData);
 			userInput();
 
 		}
@@ -367,7 +377,7 @@ int main()
 			userInput();
 		}
 
-	} while (menuReturn == 'N');
+	} while (menuReturn == 'Y');
 	return 0;
 }
 
@@ -406,8 +416,9 @@ void mainMenu(){
 };
 // print first check
 
-void printOne(FoodItem* foodItems, float price){
-	printHeader();
+void printOne(FoodItem* foodItems, float price, CheckMetaData metadata){
+	
+	printHeader(metadata);
 	cout << endl;
 	// printing food items
 	for (int i = 0; i < foodIndex; i++) {		
@@ -415,26 +426,73 @@ void printOne(FoodItem* foodItems, float price){
 	}
 	cout << endl;
 	printPrice(price);
-	printFooter();
+	cout << endl;
+	printFooter(metadata);
 
 };
 
 //save first check
-void saveOne(FoodItem* foodItems, float price){
+void saveOne(FoodItem* foodItems, float price, CheckMetaData metaData){
 	ofstream myfile;
 	myfile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\output2.txt", ios::in);
+	// header
+	myfile << right << setfill(' ') << setw(40) << "321 Main St, City   " << endl;
+	myfile << right << setfill(' ') << setw(40) << "609 420 123       " << endl;
+	myfile << right << setfill(' ') << setw(40) << "* * * * Dine In * * * *" << endl;
+	myfile << metaData.getManagerLine() << endl;
+	myfile << metaData.getSeveLine() << endl;
+	// food items
 	for (int i = 0; i < foodIndex; i++) {
-		myfile << left << setfill(' ') << setw(40) << foodItems[i].getLeft() << right << setfill(' ') << setw(26) << foodItems[i].getPrice() << endl << endl;
+		myfile << left << setfill(' ') << setw(40) << foodItems[i].getLeft() << right << setfill(' ') << setw(26) << foodItems[i].getPrice() << endl;
 	}
-	cout << endl;
-	//savePrice(price);
+	myfile << endl;
+
+	// price section
+	myfile.width(60); myfile << right << "Subtotal " << price << endl; // enter location from subtotal
+	myfile.width(56); myfile << right << "Sales tax " << price << 0.18 << endl; // enter location from sales tax
+	myfile.width(66); myfile << right << "Please pay this amount" << endl;
+	myfile.width(59); myfile << right << "Total " << price + price * 0.18 << endl; // enter location from Total
+	myfile << "------------------------------------------------------------------\n";
+	myfile << "Gratuity Not Included. Suggested amounts are\n";
+	myfile << "provided for your convenience.\n";
+	myfile << "------------------------------------------------------------------\n";
+	myfile << left << setfill(' ') << setw(40) << "Suggested gratuity is 22% -- $" << right << setfill(' ') << setw(26) << price * 0.22 << endl;
+	myfile << left << setfill(' ') << setw(40) << "Suggested gratuity is 20% -- $" << right << setfill(' ') << setw(26) << price * 0.20 << endl;
+	myfile << left << setfill(' ') << setw(40) << "Suggested gratuity is 18% -- $" << right << setfill(' ') << setw(26) << price * 0.18 << endl;
+	myfile << endl;
+	// footer section
+	myfile << "------------------------------------------------------------------ \n";
+	myfile << "THANKS FOR VISITING US TODAY!\n";
+	myfile << "------------------------------------------------------------------ \n";
+	myfile << left << setfill(' ') << setw(40) << "OG#1482" << right << setfill(' ') << setw(26) << metaData.guestLine() << endl;
+	myfile << left << setfill(' ') << setw(40) << "Check# " + checkID << right << setfill(' ') << setw(26) <<" " + metaData.getTime() << endl;
+	myfile << left << setfill(' ') << setw(40) << "Table " + metaData.tableLine() << right << setfill(' ') << setw(26) << " " + metaData.getDate() << endl;
 	myfile.close();
 
+	cout << left <<"OUTPUT FILE:" << endl;
+	ifstream file;
+	file.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\output2.txt", ios::in);
+	string line2;
+	while (!file.fail() && !file.eof()) {
+		getline(file, line2);
+		cout << line2 << endl;
+	}
+	file.close();
 
 };
+
 // print second check
-void printTwo(CardPayment cardPayment, float price){
-	printHeader();
+void printTwo(CardPayment cardPayment, float price, CheckMetaData metaData){
+	cout << right << setfill(' ') << setw(40) << "321 Main St, City   " << endl;
+	cout << right << setfill(' ') << setw(40) << "609 420 123       " << endl;
+	cout << right << setfill(' ') << setw(40) << "* * * * Dine In * * * *" << endl;
+
+	cout << right << setw(66) << "Check#" + checkID << endl;
+	cout << metaData.tableLine();
+	cout << metaData.getServer() << endl;
+	cout << left << setfill(' ') << setw(40) << metaData.getDate() + " " + metaData.getTime() << right << setfill(' ') << setw(26) << metaData.guestLine() << endl;
+
+	
 	cout << cardPayment.printHeader();
 	cout << left << setfill('-') << setw(66) << ' ' << endl;
 	cout << left << setfill(' ') << setw(40) << "Card Number" << right << setfill(' ') << setw(26) << "Auth Code" << endl;
@@ -442,24 +500,84 @@ void printTwo(CardPayment cardPayment, float price){
 	cout << left << setfill(' ') << setw(40) << "Check Amount" << right << setfill(' ') << setw(26) << cardPayment.printAmout() << endl;
 	cout << "------------------------------------------------------------------\n";
 	printPrice(price);
-	printFooter();
+	cout << endl;
+	cout << left << setfill(' ') << setw(40) << "Gratuity..." << right << setfill(' ') << setw(26) << "___________" << endl;
+	cout << left << setfill(' ') << setw(40) << "Total...   " << right << setfill(' ') << setw(26) << "___________";
+	cout << endl << endl;
+	cout << "X";
+	cout << left << setfill('_') << setw(65) << "" << endl;
+	cout << left << setw(65) << "Cardmember agrees to pay total in accordance \nwith agreement governing use of such card.\n";
+	cout << right << setfill(' ') << setw(40) << "Guest Copy" << endl;
+
 };
 
 // save second check
-void saveTwo(CardPayment cardPayment){ 
+void saveTwo(CardPayment cardPayment, float price, CheckMetaData metaData){ 
 	ofstream myfile;
 	myfile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\output2.txt", ios::in);
+	myfile << right << setfill(' ') << setw(40) << "321 Main St, City   " << endl;
+	myfile << right << setfill(' ') << setw(40) << "609 420 123       " << endl;
+	myfile << right << setfill(' ') << setw(40) << "* * * * Dine In * * * *" << endl;
+	myfile << metaData.getManagerLine() << endl;
+	myfile << metaData.getSeveLine() << endl;
+	myfile << "------------------------------------------------------------------ \n";
+
+	myfile << right << setw(66) << "Check#" + checkID << endl;
+	myfile << metaData.tableLine();
+	myfile << metaData.getServer() << endl;
+	myfile << left << setfill(' ') << setw(40) << metaData.getDate() + " " + metaData.getTime() << right << setfill(' ') << setw(26) << metaData.guestLine() << endl;
+
+	// card payment 
 	myfile << cardPayment.printHeader();
-	myfile << "----------------------------------------" << endl;
-	myfile << left << setfill(' ') << setw(20) << "Card Number" << right << setfill(' ') << setw(20) << "Auth Code" << endl;
-	myfile << left << setfill(' ') << setw(20) << cardPayment.printCardNumber() << right << setfill(' ') << setw(20) << cardPayment.printChipAuth() << endl << endl;
-	myfile << left << setfill(' ') << setw(20) << "Check Amount" << right << setfill(' ') << setw(20) << cardPayment.printAmout() << endl;
-	myfile << "----------------------------------------" << endl;
+	myfile << left << setfill('-') << setw(66) << ' ' << endl;
+	myfile << left << setfill(' ') << setw(40) << "Card Number" << right << setfill(' ') << setw(26) << "Auth Code" << endl;
+	myfile << left << setfill(' ') << setw(40) << cardPayment.printCardNumber() << right << setfill(' ') << setw(26) << cardPayment.printChipAuth() << endl << endl;
+	myfile << left << setfill(' ') << setw(40) << "Check Amount" << right << setfill(' ') << setw(26) << cardPayment.printAmout() << endl;
+	myfile << "------------------------------------------------------------------\n";
+	printPrice(price);
+
+	// gratuity
+	float totalAndTax = (price * 0.18 + price);
+	float tax = price + 0.18;
+	myfile.width(60); myfile << right << "Subtotal " << price << endl; // enter location from subtotal
+	myfile.width(60); myfile << right << "Sales tax " << tax << endl; // enter location from sales tax
+	myfile.width(66); myfile << right << "Please pay this amount" << endl;
+	myfile.width(59); myfile << right << "Total " << totalAndTax << endl; // enter location from Total
+	myfile << "------------------------------------------------------------------\n";
+	myfile << "Gratuity Not Included. Suggested amounts are\n";
+	myfile << "provided for your convenience.\n";
+	myfile << "------------------------------------------------------------------\n";
+	myfile << left << setfill(' ') << setw(40) << "Suggested gratuity is 22% -- $" << right << setfill(' ') << setw(26) << price * 0.22 << endl;
+	myfile << left << setfill(' ') << setw(40) << "Suggested gratuity is 20% -- $" << right << setfill(' ') << setw(26) << price * 0.20 << endl;
+	myfile << left << setfill(' ') << setw(40) << "Suggested gratuity is 18% -- $" << right << setfill(' ') << setw(26) << price * 0.18 << endl;
+
+	myfile << endl;
+	myfile << left << setfill(' ') << setw(40) << "Gratuity..." << right << setfill(' ') << setw(26) << "___________" << endl;
+	myfile << left << setfill(' ') << setw(40) << "Total...   " << right << setfill(' ') << setw(26) << "___________";
+	myfile << endl << endl;
+	myfile << "X";
+	myfile << left << setfill('_') << setw(65) << "" << endl;
+	myfile << left << setw(65) << "Cardmember agrees to pay total in accordance \nwith agreement governing use of such card.\n";
+	myfile << right << setfill(' ') << setw(40) << "Guest Copy" << endl;
+
+
+
+
+
 	myfile.close();
+
+	ifstream file;
+	string line2;
+	file.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\output2.txt", ios::in);
+	while (!file.fail() && !file.eof()) {
+		getline(file, line2);
+		cout << line2 << endl;
+	}
+	file.close();
 };
 
 void printPrice(float price) {
-	float totalAndTax = ((price + price) * 0.18);
+	float totalAndTax = (price + (price * 0.18));
 	float tax = price + 0.18;
 	cout.width(60); cout << right << "Subtotal " << price << endl; // enter location from subtotal
 	cout.width(60); cout << right << "Sales tax "<< tax << endl; // enter location from sales tax
@@ -474,36 +592,26 @@ void printPrice(float price) {
 	cout << left << setfill(' ') << setw(40) << "Suggested gratuity is 18% -- $" << right << setfill(' ') << setw(26) << price * 0.18 << endl;
 }
 
-void savePrice(float price, ofstream file) {
-	cout.width(60); file << right << "Subtotal " << price << endl; // enter location from subtotal
-	cout.width(56); file << right << "Sales tax " << price << 0.18 << endl; // enter location from sales tax
-	cout.width(66); file << right << "Please pay this amount" << endl;
-	cout.width(59); file << right << "Total " << price + price * 0.18 << endl; // enter location from Total
-	file << "------------------------------------------------------------------\n";
-	file << "Gratuity Not Included. Suggested amounts are\n";
-	file << "provided for your convenience.\n";
-	file << "------------------------------------------------------------------\n";
-	file << left << setfill(' ') << setw(40) << "Suggested gratuity is 22% -- $" << right << setfill(' ') << setw(10) << price * 0.22 << endl;
-	file << left << setfill(' ') << setw(40) << "Suggested gratuity is 20% -- $" << right << setfill(' ') << setw(10) << price * 0.20 << endl;
-	file << left << setfill(' ') << setw(40) << "Suggested gratuity is 18% -- $" << right << setfill(' ') << setw(10) << price * 0.18 << endl;
-}
 
-void printHeader() {
-	cout << right << setfill(' ') << setw(40) << "Address line 1" << endl;
-	cout << right << setfill(' ') << setw(40) << "Address line 2" << endl;
-	cout << right << setfill(' ') << setw(40) << "number" << endl;
+
+void printHeader(CheckMetaData metaData) {
+	string test;
+	cout << right << setfill(' ') << setw(40) << "321 Main St, City   " << endl;
+	cout << right << setfill(' ') << setw(40) << "609 420 123       " << endl;
 	cout << right << setfill(' ') << setw(40) << "* * * * Dine In * * * *" << endl;
-	cout << "General Manager : " << "Insert managet name" << endl;
-	cout << "Proudly served by : " << "Insert employee name" << endl;
+	cout << metaData.getManagerLine() << endl;
+	cout << metaData.getSeveLine() << endl;
 	cout << "------------------------------------------------------------------ \n";
 }
-void printFooter() {
+void printFooter(CheckMetaData metadata) {
 	cout << "------------------------------------------------------------------ \n";
 	cout << "THANKS FOR VISITING US TODAY!\n";
 	cout << "------------------------------------------------------------------ \n";
-	cout << "miscalaneous info" << right << setfill(' ') << setw(25) << "# of guest\n";
-	cout << "miscalaneous " << right << setfill(' ') << setw(23) << "Time\n";
-	cout << "Tabble #" << right << setfill(' ') << setw(26) << "Date\n";
+	cout << left << setfill(' ') << setw(40) << "OG#1482" << right << setfill(' ') << setw(26) << metadata.guestLine() << endl;
+	cout << left << setfill(' ') << setw(40) << "Check Number " + checkID << right << setfill(' ') << setw(26) << metadata.getTime() << endl;
+	cout << left << setfill(' ') << setw(40) << "Table " + metadata.tableLine()  << right << setfill(' ') << setw(26) << metadata.getDate() << endl;
+	cout << endl;
+
 }
 
 // make sure that user can only enter Y or N 

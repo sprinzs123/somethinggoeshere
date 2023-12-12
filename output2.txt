@@ -1,24 +1,43 @@
-2 Kids Apple Juice                                               1
+                    321 Main St, City   
+                      609 420 123       
+                 * * * * Dine In * * * *
+General Manager: Mangager
+Proudly served by : Server Name
+------------------------------------------------------------------ 
+                                                       Check#64337
+Table 123Server Name
+Jan 12 10:10am                                            Guests 4
+Transaction #: 2098728448
 
-1 Regular Dipping Sauce                                          1
+AID: A0000000031010
+TC: 14B226CE80F83F18
+App Name/Label: VISA CREDIT CVM
+Card Verification: Fail 
+Tran DataSource: chip
+ -----------------------------------------------------------------
+Card Number                                              Auth Code
+xxxxxxxxxxxx0903                                            02369D
 
-4 Kids CYO Alf Sauce Spaghetti Fries                             1
+Check Amount                                              4.140000
+------------------------------------------------------------------
+                                                   Subtotal 12
+                                                  Sales tax 12.18
+                                            Please pay this amount
+                                                     Total 4.32
+------------------------------------------------------------------
+Gratuity Not Included. Suggested amounts are
+provided for your convenience.
+------------------------------------------------------------------
+Suggested gratuity is 22% -- $                                2.64
+Suggested gratuity is 20% -- $                                 2.4
+Suggested gratuity is 18% -- $                                2.16
 
-1 Side Chicken Fingers                                           1
+Gratuity...                                            ___________
+Total...                                               ___________
 
-5 Chocolate Brownie Lasagna                                      1
-
-1 Pumpkin Cheesecake                                             1
-
-2 Bellini Peach Tea                                              1
-
-1 6oz Sirloin Well w/ Salad                                      1
-
-1 Raspberry Lemonade                                             1
-
-1 Tour of Italy w/ Salad                                         1
-
-1 Hot Tea                                                        1
-
-1 Chicken & Shrimp Carbonara                                     1
-
+X_________________________________________________________________
+Cardmember agrees to pay total in accordance 
+with agreement governing use of such card.
+                              Guest Copy
+337                                               10:10am
+Table Table 123                                             Jan 12
