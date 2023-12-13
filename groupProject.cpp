@@ -151,7 +151,6 @@ FoodItem selectFoodLine(string, string, int);
 CardPayment selectCardLine(string, string, int);
 CheckMetaData createMeta();
 void printPrice(float);
-void savePrice(float, ofstream);
 void printHeader(CheckMetaData);
 
 
@@ -246,9 +245,14 @@ FoodItem selectFoodLine(string chechId, string line, int delimeterCount) {
 			}
 		}		
 	}	
-
-	FoodItem foodItem = FoodItem(foodName, foodPrice, foodCount);
-	return foodItem;
+	try {
+		FoodItem foodItem = FoodItem(foodName, foodPrice, foodCount);
+		return foodItem;
+	}
+	catch (int e) {
+		FoodItem foodItem = FoodItem("", 0, -1);
+		return foodItem;
+	}
 }
 
 // creates credit card object from string
@@ -256,11 +260,21 @@ CardPayment selectCardLine(string chechId, string line, int delimeterCount) {
 	CardPayment cardPayment;
 	string* arrItems = substringArr(line, '-', delimeterCount);
 	// valid card, found all items, arraay of string is correct size
-	if (arrItems[0] != "-1") {		
-		CardPayment newCard = CardPayment(arrItems[0], stoi(arrItems[1]), stof(arrItems[2]), arrItems[3], arrItems[4], arrItems[5], arrItems[6], arrItems[7], arrItems[8] );
-		cardPayment = newCard; // assign new items to empty card object
+	if (arrItems[0] != "-1" && arrItems[-1] != checkID) {
+		try {
+			CardPayment newCard = CardPayment(arrItems[0], stoi(arrItems[1]), stof(arrItems[2]), arrItems[3], arrItems[4], arrItems[5], arrItems[6], arrItems[7], arrItems[8]);
+			cardPayment = newCard; // assign new items to empty card object
+			return cardPayment;
+		}
+		catch (int e) {
+			cout << "can't process card info";
+			exit(1);
+		}
 	}
-	return cardPayment;
+	else {
+		cout << "can't process card info";
+		exit(1);
+	}
 
 }
 CheckMetaData createMeta() {
@@ -304,7 +318,7 @@ int main()
 			FoodItem foodItem = selectFoodLine("64337", line, 2);
 			if (foodItem.getCount() != -1) { //get only valid food items
 				foodArray[foodIndex] = foodItem;
-				price += foodItem.getPrice();
+				price += foodItem.getPrice() * foodItem.getCount();
 				foodIndex += 1;
 			}	
 		}
@@ -434,7 +448,7 @@ void printOne(FoodItem* foodItems, float price, CheckMetaData metadata){
 //save first check
 void saveOne(FoodItem* foodItems, float price, CheckMetaData metaData){
 	ofstream myfile;
-	myfile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\output2.txt", ios::in);
+	myfile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\output1.txt", ios::in);
 	// header
 	myfile << right << setfill(' ') << setw(40) << "321 Main St, City   " << endl;
 	myfile << right << setfill(' ') << setw(40) << "609 420 123       " << endl;
@@ -449,7 +463,7 @@ void saveOne(FoodItem* foodItems, float price, CheckMetaData metaData){
 
 	// price section
 	myfile.width(60); myfile << right << "Subtotal " << price << endl; // enter location from subtotal
-	myfile.width(56); myfile << right << "Sales tax " << price << 0.18 << endl; // enter location from sales tax
+	myfile.width(56); myfile << right << "Sales tax " << price * 0.18 << endl; // enter location from sales tax
 	myfile.width(66); myfile << right << "Please pay this amount" << endl;
 	myfile.width(59); myfile << right << "Total " << price + price * 0.18 << endl; // enter location from Total
 	myfile << "------------------------------------------------------------------\n";
@@ -499,7 +513,12 @@ void printTwo(CardPayment cardPayment, float price, CheckMetaData metaData){
 	cout << left << setfill(' ') << setw(40) << cardPayment.printCardNumber() << right << setfill(' ') << setw(26) <<  cardPayment.printChipAuth() << endl << endl;
 	cout << left << setfill(' ') << setw(40) << "Check Amount" << right << setfill(' ') << setw(26) << cardPayment.printAmout() << endl;
 	cout << "------------------------------------------------------------------\n";
-	printPrice(price);
+	cout << "Gratuity Not Included. Suggested amounts are\n";
+	cout << "provided for your convenience.\n";
+	cout << "------------------------------------------------------------------\n";
+	cout << left << setfill(' ') << setw(40) << "Suggested gratuity is 22% -- $" << right << setfill(' ') << setw(26) << price * 0.22 << endl;
+	cout << left << setfill(' ') << setw(40) << "Suggested gratuity is 20% -- $" << right << setfill(' ') << setw(26) << price * 0.20 << endl;
+	cout << left << setfill(' ') << setw(40) << "Suggested gratuity is 18% -- $" << right << setfill(' ') << setw(26) << price * 0.18 << endl;
 	cout << endl;
 	cout << left << setfill(' ') << setw(40) << "Gratuity..." << right << setfill(' ') << setw(26) << "___________" << endl;
 	cout << left << setfill(' ') << setw(40) << "Total...   " << right << setfill(' ') << setw(26) << "___________";
@@ -538,11 +557,7 @@ void saveTwo(CardPayment cardPayment, float price, CheckMetaData metaData){
 
 	// gratuity
 	float totalAndTax = (price * 0.18 + price);
-	float tax = price + 0.18;
-	myfile.width(60); myfile << right << "Subtotal " << price << endl; // enter location from subtotal
-	myfile.width(60); myfile << right << "Sales tax " << tax << endl; // enter location from sales tax
-	myfile.width(66); myfile << right << "Please pay this amount" << endl;
-	myfile.width(59); myfile << right << "Total " << totalAndTax << endl; // enter location from Total
+	float tax = price * 0.18;
 	myfile << "------------------------------------------------------------------\n";
 	myfile << "Gratuity Not Included. Suggested amounts are\n";
 	myfile << "provided for your convenience.\n";
@@ -578,9 +593,9 @@ void saveTwo(CardPayment cardPayment, float price, CheckMetaData metaData){
 
 void printPrice(float price) {
 	float totalAndTax = (price + (price * 0.18));
-	float tax = price + 0.18;
+	float tax = price * 0.18;
 	cout.width(60); cout << right << "Subtotal " << price << endl; // enter location from subtotal
-	cout.width(60); cout << right << "Sales tax "<< tax << endl; // enter location from sales tax
+	cout.width(60); cout << right << "Sales tax "<< price *0.18 << endl; // enter location from sales tax
 	cout.width(66); cout << right << "Please pay this amount" << endl;
 	cout.width(59); cout << right << "Total " << totalAndTax << endl; // enter location from Total
 	cout << "------------------------------------------------------------------\n";

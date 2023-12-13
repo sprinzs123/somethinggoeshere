@@ -20,17 +20,13 @@ xxxxxxxxxxxx0903                                            02369D
 
 Check Amount                                              4.140000
 ------------------------------------------------------------------
-                                                   Subtotal 12
-                                                  Sales tax 12.18
-                                            Please pay this amount
-                                                     Total 4.32
 ------------------------------------------------------------------
 Gratuity Not Included. Suggested amounts are
 provided for your convenience.
 ------------------------------------------------------------------
-Suggested gratuity is 22% -- $                                2.64
-Suggested gratuity is 20% -- $                                 2.4
-Suggested gratuity is 18% -- $                                2.16
+Suggested gratuity is 22% -- $                                4.62
+Suggested gratuity is 20% -- $                                 4.2
+Suggested gratuity is 18% -- $                                3.78
 
 Gratuity...                                            ___________
 Total...                                               ___________
@@ -39,5 +35,12 @@ X_________________________________________________________________
 Cardmember agrees to pay total in accordance 
 with agreement governing use of such card.
                               Guest Copy
-337                                               10:10am
+        3.78
+
+------------------------------------------------------------------ 
+THANKS FOR VISITING US TODAY!
+------------------------------------------------------------------ 
+OG#1482                                                   Guests 4
+Check# 64337                                               10:10am
 Table Table 123                                             Jan 12
+
