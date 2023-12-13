@@ -383,8 +383,11 @@ int main()
 			cout << system("cls");
 			red();
 			cout << "-----------> THANKS <-----------" << endl;
+			cout << "---------------------------------------------" << endl;
+			cout << "Thanks for grilling with Team Forest Dining!" << endl;
+			cout << "See you again real soon!" << endl;
+			cout << "---------------------------------------------" << endl;
 			exit(0);
-			userInput();
 		}
 		else {
 			cout << "Invalid input, try again" << endl;
