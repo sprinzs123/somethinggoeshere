@@ -1,11 +1,11 @@
                     321 Main St, City   
                       609 420 123       
                  * * * * Dine In * * * *
-General Manager: Mangager
-Proudly served by : Server Name
+General Manager: Smith Smithy
+General Manager: John Jonson
 ------------------------------------------------------------------ 
                                                        Check#64337
-Table 123Server Name
+Table 123John Jonson
 Jan 12 10:10am                                            Guests 4
 Transaction #: 2098728448
 
@@ -18,15 +18,15 @@ Tran DataSource: chip
 Card Number                                              Auth Code
 xxxxxxxxxxxx0903                                            02369D
 
-Check Amount                                              4.140000
+Check Amount                                                 135.7
 ------------------------------------------------------------------
 ------------------------------------------------------------------
 Gratuity Not Included. Suggested amounts are
 provided for your convenience.
 ------------------------------------------------------------------
-Suggested gratuity is 22% -- $                                4.62
-Suggested gratuity is 20% -- $                                 4.2
-Suggested gratuity is 18% -- $                                3.78
+Suggested gratuity is 22% -- $                              29.854
+Suggested gratuity is 20% -- $                               27.14
+Suggested gratuity is 18% -- $                              24.426
 
 Gratuity...                                            ___________
 Total...                                               ___________
@@ -35,7 +35,7 @@ X_________________________________________________________________
 Cardmember agrees to pay total in accordance 
 with agreement governing use of such card.
                               Guest Copy
-        3.78
+       3.78
 
 ------------------------------------------------------------------ 
 THANKS FOR VISITING US TODAY!

@@ -2,36 +2,36 @@
                       609 420 123       
                  * * * * Dine In * * * *
 General Manager: Mangager
-Proudly served by : Server Name
-2 Kids Apple Juice                                               1
-1 Regular Dipping Sauce                                          1
-4 Kids CYO Alf Sauce Spaghetti Fries                             1
-1 Side Chicken Fingers                                           1
-5 Chocolate Brownie Lasagna                                      1
-1 Pumpkin Cheesecake                                             1
-2 Bellini Peach Tea                                              1
-1 6oz Sirloin Well w/ Salad                                      1
+General Manager: Server Name
+2 Kids Apple Juice                                              10
+1 Regular Dipping Sauce                                       11.1
+4 Kids CYO Alf Sauce Spaghetti Fries                           7.1
+1 Side Chicken Fingers                                         3.5
+5 Chocolate Brownie Lasagna                                    2.1
+1 Pumpkin Cheesecake                                           2.2
+2 Bellini Peach Tea                                           11.1
+1 6oz Sirloin Well w/ Salad                                   20.2
 1 Raspberry Lemonade                                             1
-1 Tour of Italy w/ Salad                                         1
-1 Hot Tea                                                        1
-1 Chicken & Shrimp Carbonara                                     1
-1                                                                1
+1 Tour of Italy w/ Salad                                       4.2
+1 Hot Tea                                                      1.4
+1 Chicken & Shrimp Carbonara                                   5.5
+1                                                              5.5
 
-                                                   Subtotal 22
-                                              Sales tax 3.96
+                                                   Subtotal 135.7
+                                              Sales tax 24.426
                                             Please pay this amount
-                                                     Total 25.96
+                                                     Total 160.126
 ------------------------------------------------------------------
 Gratuity Not Included. Suggested amounts are
 provided for your convenience.
 ------------------------------------------------------------------
-Suggested gratuity is 22% -- $                                4.84
-Suggested gratuity is 20% -- $                                 4.4
-Suggested gratuity is 18% -- $                                3.96
+Suggested gratuity is 22% -- $                              29.854
+Suggested gratuity is 20% -- $                               27.14
+Suggested gratuity is 18% -- $                              24.426
 
 Gift Card (393353)                                              10
 Gift Card (465423)                                              20
-VISA CREDIT CVM                                                  0
+VISA CREDIT CVM                                              105.7
 ------------------------------------------------------------------ 
 THANKS FOR VISITING US TODAY!
 ------------------------------------------------------------------ 

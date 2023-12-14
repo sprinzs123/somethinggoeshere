@@ -32,6 +32,93 @@ int menuOption; // option menu
 string checkID = "64337"; // check id
 
 // #### New Classes ####
+
+
+class Employee {
+public:
+	virtual void display() const = 0; // Pure virtual function
+	virtual string displayStr() const = 0; // Pure virtual function
+
+};
+
+// Derived class for Manager information
+class Manager : public Employee {
+private:
+	std::string manager;
+
+public:
+	Manager(const std::string& manager) : manager(manager) {}
+
+	void display() const override {
+		std::cout << "General Manager: " << manager << std::endl;
+	}
+	string displayStr() const override {
+		return "General Manager: " + manager;
+	}
+};
+
+class Server : public Employee {
+private:
+	std::string server;
+
+public:
+	Server(const std::string& server) : server(server) {}
+
+	void display() const override {
+		std::cout << "Proudly Served By: " << server << std::endl;
+	}
+	string displayStr() const override {
+		return "General Manager: " + server;
+	}
+};
+
+class Payment {
+public:
+	virtual void display() const = 0; // Pure virtual function
+	virtual string displayStr() const = 0; // Pure virtual function
+	virtual float getAmount() const = 0; // Pure virtual function
+};
+
+// Derived class for Payment information
+class CreditPayment : public Payment {
+private:
+	float amount;
+
+public:
+	CreditPayment(const float& amount) : amount(amount) {}
+
+	void display() const override {
+		std::cout << "Payed by credit card " << amount << std::endl;
+	}
+	string displayStr() const override {
+		return "Payed by credit cards: " + to_string(amount);
+	}
+	float getAmount() const override {
+		return amount;
+	}	
+};
+
+// Derived class for Payment information
+class GiftPayment : public Payment {
+private:
+	float amount;
+
+public:
+	GiftPayment(const float& amount) : amount(amount) {}
+
+	void display() const override {
+		std::cout << "Payed by gift cards " << amount << std::endl;
+	}
+	string displayStr() const override {
+		return "Payed by gift cards cards: " + to_string(amount);
+	}
+	float getAmount() const override {
+		return amount;
+	}
+};
+
+
+
 class CheckMetaData {
 private:
 	string server;
@@ -54,8 +141,8 @@ public:
 	void print() {
 		cout << "Server: " << server << "Manager: " << manager << "Time " << time << "Date " << date << "Table " << table << "Guests " << guests;
 	}
-	string getManagerLine() { return "General Manager: " + manager; }
-	string getSeveLine() { return "Proudly served by : " + server; }
+	string getManagerLine() {return Manager(manager).displayStr();}
+	string getSeveLine() {return Server(server).displayStr();	}
 	string getTime() { return time; }
 	string tableLine(){	return "Table " + to_string(table);}
 	string guestLine() { return "Guests " + to_string(guests); }	   
@@ -399,6 +486,7 @@ int main()
 
 	float card_price = price; // how much to pay for credit card
 	// GET GIFT CARDS
+	float giftPayment;
 	GiftCard giftArr[20];  // storing gift cards
 	ifstream giftFile;
 	giftFile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\giftcard.txt", ios::in);
@@ -416,10 +504,13 @@ int main()
 		}
 	}
 	giftFile.close();
-	
 
+
+
+	card_price = CreditPayment(card_price).getAmount();
+	float gift_payment = GiftPayment(giftPayment).getAmount();
 	// checking if need to pay with credit card if gift card covers it
-	if (card_price < 0) {
+	if (gift_payment > card_price) {
 		card_price = 0;
 	}
 

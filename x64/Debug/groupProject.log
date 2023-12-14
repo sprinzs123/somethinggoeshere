@@ -1,14 +1,14 @@
 ﻿  groupProject.cpp
-C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(277,15): warning C4101: 'e': unreferenced local variable
-C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(288,14): warning C4101: 'e': unreferenced local variable
-C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(300,55): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(300,36): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(304,14): warning C4101: 'e': unreferenced local variable
-C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(325,14): warning C4101: 'e': unreferenced local variable
-C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(431,13): warning C4553: '==': result of expression not used; did you intend '='?
-C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(663,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(664,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(699,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(700,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(293): warning C4715: 'selectFoodLine': not all control paths return a value
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(364,15): warning C4101: 'e': unreferenced local variable
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(375,14): warning C4101: 'e': unreferenced local variable
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(387,55): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(387,36): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(391,14): warning C4101: 'e': unreferenced local variable
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(412,14): warning C4101: 'e': unreferenced local variable
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(522,13): warning C4553: '==': result of expression not used; did you intend '='?
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(754,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(755,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(790,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(791,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(380): warning C4715: 'selectFoodLine': not all control paths return a value
   groupProject.vcxproj -> C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\x64\Debug\groupProject.exe
