@@ -1,8 +1,8 @@
                     321 Main St, City   
                       609 420 123       
                  * * * * Dine In * * * *
-General Manager: Mangager
-General Manager: Server Name
+General Manager: Smith Smithy
+Proudly served by: John Jonson
 2 Kids Apple Juice                                              10
 1 Regular Dipping Sauce                                       11.1
 4 Kids CYO Alf Sauce Spaghetti Fries                           7.1

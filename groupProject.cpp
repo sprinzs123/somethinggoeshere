@@ -499,6 +499,11 @@ int main()
 
 	// #### menu items ##############
 	CheckMetaData metaData = createMeta();
+	cout << "   *              *    ******   *          ******      ******    *       *   ******\n";
+	cout << "    *            *     *        *         *           *      *   *  * *  *   *    \n";
+	cout << "     *    *     *      ****     *         *           *      *   *   *   *   **** \n";
+	cout << "      *  * *   *       *        *         *           *      *   *       *   *     \n";
+	cout << "       *     *         ******   *******    ******      ******    *       *   ******   \n";
 
 	cout << endl;
 	menuReturn == 'Y';
