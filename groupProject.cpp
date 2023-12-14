@@ -49,12 +49,8 @@ private:
 public:
 	Manager(const std::string& manager) : manager(manager) {}
 
-	void display() const override {
-		std::cout << "General Manager: " << manager << std::endl;
-	}
-	string displayStr() const override {
-		return "General Manager: " + manager;
-	}
+	void display() const override {	std::cout << "General Manager: " << manager << std::endl;}
+	string displayStr() const override {return "General Manager: " + manager; }
 };
 
 class Server : public Employee {
@@ -63,13 +59,8 @@ private:
 
 public:
 	Server(const std::string& server) : server(server) {}
-
-	void display() const override {
-		std::cout << "Proudly Served By: " << server << std::endl;
-	}
-	string displayStr() const override {
-		return "General Manager: " + server;
-	}
+	void display() const override {	std::cout << "Proudly Served By: " << server << std::endl;	}
+	string displayStr() const override {	return "Proudly served by: " + server;}
 };
 
 class Payment {
@@ -86,16 +77,9 @@ private:
 
 public:
 	CreditPayment(const float& amount) : amount(amount) {}
-
-	void display() const override {
-		std::cout << "Payed by credit card " << amount << std::endl;
-	}
-	string displayStr() const override {
-		return "Payed by credit cards: " + to_string(amount);
-	}
-	float getAmount() const override {
-		return amount;
-	}	
+	void display() const override {	std::cout << "Payed by credit card " << amount << std::endl;}
+	string displayStr() const override {return "Payed by credit cards: " + to_string(amount);}
+	float getAmount() const override {	return amount;	}	
 };
 
 // Derived class for Payment information
@@ -505,8 +489,6 @@ int main()
 	}
 	giftFile.close();
 
-
-
 	card_price = CreditPayment(card_price).getAmount();
 	float gift_payment = GiftPayment(giftPayment).getAmount();
 	// checking if need to pay with credit card if gift card covers it
@@ -550,6 +532,70 @@ int main()
 			cout << system("cls");
 			cout << endl;
 			saveTwo(cardPayment, price, metaData);
+			userInput();
+
+		}
+		else if (menuOption == 6) {
+			cout << system("cls");
+			cout << endl;
+			cout << "Classes Used" << endl << endl;
+
+			red();
+			cout << "class CheckMetaData" << endl;
+			cout << "string server;" << endl;
+			cout << "string manager;" << endl;
+			cout << "string time;" << endl;
+			cout << "string phone;" << endl;
+			cout << "string date;" << endl;
+			cout << "int table;" << endl;
+			cout << "int guests;" << endl;
+
+			cout << endl << endl;
+			blue();
+			cout << "class CardPayment" << endl; 
+			cout << "string AID;" << endl;
+			cout << "string TC;" << endl;
+			cout << "string label;" << endl;
+			cout << "string source;" << endl;
+			cout << "string authCode;" << endl;
+			cout << "string cardNumber;" << endl;
+			cout << "string verification;" << endl;
+			cout << "int transactionNum;" << endl;
+			cout << "float amount;" << endl;
+			cout << endl << endl;
+
+			yellow();
+			cout << "class FoodItem 	" << endl;
+			cout << "string name;" << endl;
+			cout << "float price;" << endl;
+			cout << "int count;" << endl;
+			cout << endl << endl;
+
+			teal();
+			cout << "class GiftCard" << endl;
+			cout << "float amount;" << endl;
+			cout << "int cardId;" << endl;
+			userInput();
+
+		}
+		else if (menuOption == 7) {
+			cout << system("cls");
+			cout << endl;
+			cout << "Polymorhism:" << endl << endl;
+			ifstream file;
+			string line;
+			foodFile.open("C:\\Users\\cooke\\Desktop\\school\\c_plus_plus\\groupProject\\groupProject\\poly.txt", ios::in);
+			if (foodFile.fail()) {
+				cout << "Wrong file can't open polymorphism \n";
+			}
+			else {
+				while (getline(foodFile, line)) {
+					cout << line << endl;
+				}
+				
+				file.close();
+			}
+
 			userInput();
 
 		}
@@ -693,7 +739,7 @@ void printTwo(CardPayment cardPayment, float price, CheckMetaData metaData){
 	cout << right << setfill(' ') << setw(40) << "* * * * Dine In * * * *" << endl;
 
 	cout << right << setw(66) << "Check#" + checkID << endl;
-	cout << metaData.tableLine();
+	cout << metaData.tableLine() << endl;
 	cout << metaData.getServer() << endl;
 	cout << left << setfill(' ') << setw(40) << metaData.getDate() + " " + metaData.getTime() << right << setfill(' ') << setw(26) << metaData.guestLine() << endl;
 
@@ -737,7 +783,7 @@ void saveTwo(CardPayment cardPayment, float price, CheckMetaData metaData){
 	myfile << "------------------------------------------------------------------ \n";
 
 	myfile << right << setw(66) << "Check#" + checkID << endl;
-	myfile << metaData.tableLine();
+	myfile << metaData.tableLine() << endl;
 	myfile << metaData.getServer() << endl;
 	myfile << left << setfill(' ') << setw(40) << metaData.getDate() + " " + metaData.getTime() << right << setfill(' ') << setw(26) << metaData.guestLine() << endl;
 

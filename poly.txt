@@ -1,0 +1,61 @@
+class Employee {
+public:
+	virtual void display() const = 0; // Pure virtual function
+	virtual string displayStr() const = 0; // Pure virtual function
+};
+
+
+// Derived class for Manager information
+class Manager : public Employee {
+private:
+	std::string manager;
+
+public:
+	Manager(const std::string& manager) : manager(manager) {}
+	void display() const override {	std::cout << "General Manager: " << manager << std::endl;}
+	string displayStr() const override {return "General Manager: " + manager; }
+};
+
+
+class Server : public Employee {
+private:
+	std::string server;
+public:
+	Server(const std::string& server) : server(server) {}
+	void display() const override {	std::cout << "Proudly Served By: " << server << std::endl;	}
+	string displayStr() const override {	return "Proudly served by: " + server;}
+};
+
+
+
+
+
+// Derived class for Payment information
+class Payment {
+public:
+	virtual void display() const = 0; // Pure virtual function
+	virtual string displayStr() const = 0; // Pure virtual function
+	virtual float getAmount() const = 0; // Pure virtual function
+};
+
+
+class CreditPayment : public Payment {
+private:
+	float amount;
+public:
+	CreditPayment(const float& amount) : amount(amount) {}
+	void display() const override {	std::cout << "Payed by credit card " << amount << std::endl;}
+	string displayStr() const override {return "Payed by credit cards: " + to_string(amount);}
+	float getAmount() const override {	return amount;	}	
+};
+
+
+class GiftPayment : public Payment {
+private:
+	float amount;
+public:
+	GiftPayment(const float& amount) : amount(amount) {}
+	void display() const override {std::cout << "Payed by gift cards " << amount << std::endl;}
+	string displayStr() const override {return "Payed by gift cards cards: " + to_string(amount);}
+	float getAmount() const override {return amount;}
+};
