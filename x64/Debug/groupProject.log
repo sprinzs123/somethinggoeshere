@@ -6,9 +6,9 @@ C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject
 C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(375,14): warning C4101: 'e': unreferenced local variable
 C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(396,14): warning C4101: 'e': unreferenced local variable
 C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(509,13): warning C4553: '==': result of expression not used; did you intend '='?
-C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(805,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(806,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(841,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(842,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(803,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(804,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(839,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(840,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\groupProject\groupProject.cpp(364): warning C4715: 'selectFoodLine': not all control paths return a value
   groupProject.vcxproj -> C:\Users\cooke\Desktop\school\c_plus_plus\groupProject\x64\Debug\groupProject.exe

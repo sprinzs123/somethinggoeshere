@@ -670,7 +670,6 @@ void printOne(FoodItem* foodItems, float price, CheckMetaData metadata, GiftCard
 	cout << endl;
 	printPrice(price);
 	cout << endl;
-	cyan();
 	for (int i = 0; i < giftCount; i++) {
 		cout << left << setfill(' ') << setw(40) << "Gift Card (" + to_string(giftArr[i].getId()) + ")" << right << setfill(' ') << setw(26) << giftArr[i].getAmount() << endl;
 	}
@@ -700,9 +699,9 @@ void saveOne(FoodItem* foodItems, float price, CheckMetaData metaData, GiftCard*
 
 	// price section
 	myfile.width(60); myfile << right << "Subtotal " << price << endl; // enter location from subtotal
-	myfile.width(56); myfile << right << "Sales tax " << price * 0.18 << endl; // enter location from sales tax
+	myfile.width(56); myfile << right << "Sales tax " << round(price * 18)/100.0 << endl; // enter location from sales tax
 	myfile.width(66); myfile << right << "Please pay this amount" << endl;
-	myfile.width(59); myfile << right << "Total " << price + price * 0.18 << endl; // enter location from Total
+	myfile.width(59); myfile << right << "Total " << round(price + price * 18)/100.0 << endl; // enter location from Total
 	myfile << "------------------------------------------------------------------\n";
 	myfile << "Gratuity Not Included. Suggested amounts are\n";
 	myfile << "provided for your convenience.\n";
@@ -759,10 +758,9 @@ void printTwo(CardPayment cardPayment, float price, CheckMetaData metaData){
 	cout << "provided for your convenience.\n";
 	cout << "------------------------------------------------------------------\n";
 
-	yellow();
-	cout << left << setfill(' ') << setw(40) << "Suggested gratuity is 22% -- $" << right << setfill(' ') << setw(26) << price * 0.22 << endl;
-	cout << left << setfill(' ') << setw(40) << "Suggested gratuity is 20% -- $" << right << setfill(' ') << setw(26) << price * 0.20 << endl;
-	cout << left << setfill(' ') << setw(40) << "Suggested gratuity is 18% -- $" << right << setfill(' ') << setw(26) << price * 0.18 << endl;
+	cout << left << setfill(' ') << setw(40) << "Suggested gratuity is 22% -- $" << right << setfill(' ') << setw(26) << round(price * 22)/100.0 << endl;
+	cout << left << setfill(' ') << setw(40) << "Suggested gratuity is 20% -- $" << right << setfill(' ') << setw(26) << round(price * 20)/100 << endl;
+	cout << left << setfill(' ') << setw(40) << "Suggested gratuity is 18% -- $" << right << setfill(' ') << setw(26) << round(price * 18)/100 << endl;
 	cout << endl;
 	cout << left << setfill(' ') << setw(40) << "Gratuity..." << right << setfill(' ') << setw(26) << "___________" << endl;
 	cout << left << setfill(' ') << setw(40) << "Total...   " << right << setfill(' ') << setw(26) << "___________";
@@ -808,9 +806,9 @@ void saveTwo(CardPayment cardPayment, float price, CheckMetaData metaData){
 	myfile << "Gratuity Not Included. Suggested amounts are\n";
 	myfile << "provided for your convenience.\n";
 	myfile << "------------------------------------------------------------------\n";
-	myfile << left << setfill(' ') << setw(40) << "Suggested gratuity is 22% -- $" << right << setfill(' ') << setw(26) << price * 0.22 << endl;
-	myfile << left << setfill(' ') << setw(40) << "Suggested gratuity is 20% -- $" << right << setfill(' ') << setw(26) << price * 0.20 << endl;
-	myfile << left << setfill(' ') << setw(40) << "Suggested gratuity is 18% -- $" << right << setfill(' ') << setw(26) << price * 0.18 << endl;
+	myfile << left << setfill(' ') << setw(40) << "Suggested gratuity is 22% -- $" << right << setfill(' ') << setw(26) << round(price * 22) /100.0 << endl;
+	myfile << left << setfill(' ') << setw(40) << "Suggested gratuity is 20% -- $" << right << setfill(' ') << setw(26) << round(price * 20)/100.0 << endl;
+	myfile << left << setfill(' ') << setw(40) << "Suggested gratuity is 18% -- $" << right << setfill(' ') << setw(26) << round(price * 18)/100.0 << endl;
 
 	myfile << endl;
 	myfile << left << setfill(' ') << setw(40) << "Gratuity..." << right << setfill(' ') << setw(26) << "___________" << endl;
@@ -839,18 +837,18 @@ void saveTwo(CardPayment cardPayment, float price, CheckMetaData metaData){
 
 void printPrice(float price) {
 	float totalAndTax = (price + (price * 0.18));
-	float tax = price * 0.18;
+	float tax = round(price * 18)/100.0;
 	cout.width(60); cout << right << "Subtotal " << price << endl; // enter location from subtotal
-	cout.width(60); cout << right << "Sales tax "<< price *0.18 << endl; // enter location from sales tax
+	cout.width(60); cout << right << "Sales tax "<< round(price *18)/100 << endl; // enter location from sales tax
 	cout.width(66); cout << right << "Please pay this amount" << endl;
-	cout.width(59); cout << right << "Total " << totalAndTax << endl; // enter location from Total
+	cout.width(59); cout << right << "Total " << totalAndTax  << endl; // enter location from Total
 	cout << "------------------------------------------------------------------\n";
 	cout << "Gratuity Not Included. Suggested amounts are\n";
 	cout << "provided for your convenience.\n";
 	cout << "------------------------------------------------------------------\n";
-	cout << left << setfill(' ') << setw(40) << "Suggested gratuity is 22% -- $" << right << setfill(' ') << setw(26) << price * 0.22 << endl;
-	cout << left << setfill(' ') << setw(40) << "Suggested gratuity is 20% -- $" << right << setfill(' ') << setw(26) << price * 0.20 << endl;
-	cout << left << setfill(' ') << setw(40) << "Suggested gratuity is 18% -- $" << right << setfill(' ') << setw(26) << price * 0.18 << endl;
+	cout << left << setfill(' ') << setw(40) << "Suggested gratuity is 22% -- $" << right << setfill(' ') << setw(26) << round(price * 22) / 100.0 << endl;
+	cout << left << setfill(' ') << setw(40) << "Suggested gratuity is 20% -- $" << right << setfill(' ') << setw(26) << round(price * 20) /100.0 << endl;
+	cout << left << setfill(' ') << setw(40) << "Suggested gratuity is 18% -- $" << right << setfill(' ') << setw(26) << round(price * 18)/100.0 << endl;
 }
 
 
